@@ -57,5 +57,8 @@ Deadline 2026-10-07 15:56 UTC.
 ## 2026-10-06 16:52–16:56 UTC (wake)
 - No new approval answers. PRs #29 and #13 still open. Outreach template now pitches TxSqueeze too. Filed r01-a1-show-hn (HN signup disabled here).
 
+## 2026-10-06 17:07–17:12 UTC (wake)
+- No new answers. More evidence: Koinly board "Way too many micro-payments falsely pushing into Top Tier Plan" (17 votes, Dec 2025) — added to report and to the Canny request. Third-party forums (CoinTracking, CoinTracker community) unreachable from here.
+
 ## Next
 - Wait on approvals; meanwhile add CoinTracker/CoinLedger/Awaken formats? Only if traffic arrives. Keep looking for reachable channels.
