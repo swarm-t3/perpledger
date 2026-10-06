@@ -254,8 +254,8 @@ $('f').addEventListener('submit', async (e) => {
     const res = build(fills, funding, ledger, user, $('year').value, $('agg').value);
     RESULT = { res, user };
     const firstFill = fills.length ? Math.min(...fills.map((f) => f.time)) : 0;
-    render(res, user, firstFill, fills.length);
     $('status').textContent = `Done: ${fills.length} fills, ${funding.length} funding payments, ${ledger.length} transfers.`;
+    render(res, user, firstFill, fills.length);
     track('built');
   } catch (err) {
     $('status').innerHTML = `<span class="err">${err.message}</span>`;
