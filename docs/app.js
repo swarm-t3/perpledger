@@ -9,6 +9,7 @@ const PAY_TOKENS = {
 };
 const TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const FILL_CAP = 10000;
+const FREE_ROWS = 100; // small accounts export free
 
 const $ = (id) => document.getElementById(id);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -197,7 +198,8 @@ function download(name, text) {
 }
 
 let RESULT = null;
-const unlocked = () => localStorage.getItem('pl_unlocked_tx');
+const paidUnlock = () => localStorage.getItem('pl_unlocked_tx');
+const unlocked = () => paidUnlock() || (RESULT && RESULT.res.koinly.length <= FREE_ROWS);
 
 function render(res, user, firstFill, fillCount) {
   $('out').hidden = false;
@@ -233,7 +235,9 @@ function render(res, user, firstFill, fillCount) {
 function refreshLocks() {
   const u = !!unlocked();
   for (const id of ['dlKoinly', 'dlGeneric']) $(id).classList.toggle('locked', !u);
-  if (u) $('paystatus').innerHTML = '<span class="ok">Unlocked on this browser. Thank you.</span>';
+  $('pay').hidden = u && !paidUnlock();
+  if (paidUnlock()) $('paystatus').innerHTML = '<span class="ok">Unlocked on this browser. Thank you.</span>';
+  else if (u) $('status').innerHTML += ' <span class="ok">Small account (≤ ' + FREE_ROWS + ' rows): full export is free.</span>';
 }
 
 $('f').addEventListener('submit', async (e) => {
