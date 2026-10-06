@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hyperliquid yearly PnL, funding and fees calculator (free, by address)</title>
+<meta name="description" content="Free: paste a Hyperliquid address and get realized perp PnL, trading fees, net funding paid/received, deposits and withdrawals per year. Runs in your browser from Hyperliquid's public API.">
+<link rel="canonical" href="https://swarm-t3.github.io/perpledger/hyperliquid-yearly-pnl-funding.html">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="./" style="text-decoration:none;color:inherit">Perp<span>Ledger</span></a><nav><a href="./">Open the calculator</a></nav></div></header>
+<main class="wrap">
+<h1>What was my Hyperliquid PnL this year? Funding, fees and realized PnL by year</h1>
+<p class="lead">Hyperliquid's UI shows PnL per position and a portfolio chart, but not a per-year breakdown of realized PnL, fees and funding, which is what you (or your accountant) need at tax time.</p>
+<p><a href="./"><button>Get my yearly numbers (free)</button></a></p>
+
+<h2>What you get</h2>
+<table class="t small">
+<tr><th>Line</th><th>Where it comes from</th></tr>
+<tr><td>Perp realized PnL</td><td>Sum of <code>closedPnl</code> on every perp fill closed in the year</td></tr>
+<tr><td>Trading fees</td><td>Sum of <code>fee</code> on perp fills (negative = maker rebates)</td></tr>
+<tr><td>Funding net</td><td>Sum of hourly funding payments (<code>userFunding</code>); positive means you received more than you paid</td></tr>
+<tr><td>Net perp result</td><td>Realized PnL − fees + funding</td></tr>
+<tr><td>Deposits / withdrawals</td><td>USDC bridged in from and out to Arbitrum</td></tr>
+<tr><td>Fill counts</td><td>Perp and spot fills per year</td></tr>
+</table>
+
+<h2>Things to know</h2>
+<ul>
+<li><b>Funding is not in your PnL.</b> Hyperliquid's position PnL excludes funding, which can be large for positions held for weeks. Many traders are surprised by the funding line.</li>
+<li><b>10,000-fill window.</b> Hyperliquid's API only returns your latest 10,000 fills. If you trade more than that, the page shows the date your fill data starts. Funding and transfers are complete regardless.</li>
+<li><b>Sub-accounts and vaults</b> have their own addresses. Run each one.</li>
+<li>Read-only: it uses public data for the address you paste. No wallet connection, no signature.</li>
+</ul>
+
+<h2>Need it in Koinly?</h2>
+<p>The same page writes a Koinly-ready CSV (with daily rows per coin so you stay on a smaller Koinly plan). Free for small accounts, $9 for larger ones. See the <a href="hyperliquid-koinly-csv.html">Koinly import guide</a>.</p>
+</main>
+<footer class="wrap muted">Independent tool, not affiliated with Hyperliquid or Koinly. Not tax advice.</footer>
+<script data-goatcounter="https://perpledger.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
