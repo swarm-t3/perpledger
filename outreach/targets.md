@@ -20,6 +20,8 @@ I read your Hyperliquid tax guide ({url}). I built a small tool your team might 
 
 https://swarm-t3.github.io/perpledger/
 
+A sister tool may help with clients who blow through Koinly's transaction tiers because of grid-bot fills or daily staking rewards: TxSqueeze merges those rows per day/week/month in the CSV before import and keeps the exchange's own format (Koinly's in-app bulk aggregate covers deposits only): https://swarm-t3.github.io/txsqueeze/
+
 The yearly summary is free. If it's useful for your practice I can give you a 10-client pack for $49 (or a free code to test with a client first, just reply).
 
 Not tax advice, and I'd value it if you told me where the mapping doesn't match how you treat perps.
