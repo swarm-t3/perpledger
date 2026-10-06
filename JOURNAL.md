@@ -48,5 +48,11 @@ Deadline 2026-10-07 15:56 UTC.
 - Tests: synthetic Binance file 2,242 → 1,512 (daily) / 100 (monthly), trades untouched; synthetic Koinly bot file 6,204 → 604 rows (Pro → Hodler).
 - Added TxSqueeze to the pending Canny and Whop approvals; r/CryptoTax draft #2 in outreach/reddit-cryptotax.md.
 
+## 2026-10-06 16:50–17:05 UTC
+- Found Koinly's "Aggregate rewards daily/weekly/monthly" request: 196 votes; Koinly shipped deposits-only bulk aggregate (hourly/daily, per wallet+tag, max 1,000/period) in Feb 2025. Repositioned TxSqueeze to lead with bot trades (not covered in-app) and to state accurately what Koinly already does.
+- Fixed generic role guesser (constant numeric columns like a fixed grid size were treated as keep-apart; now summed; IDs/UID → last; prices → new "average" role). KuCoin-like 3,600-fill test → 180 rows, sums verified.
+- Added bot-trader guide page (IndexNow 200). Cross-linked PerpLedger → TxSqueeze.
+- Approvals added: Canny comment on the 196-voter post; r01-a1-koinly-forum-post (Google sign-in with brand Gmail). REPORT.md draft committed. scripts/reddit.py ready for the brand Reddit account (official API).
+
 ## Next
 - Wait on approvals; meanwhile add CoinTracker/CoinLedger/Awaken formats? Only if traffic arrives. Keep looking for reachable channels.
