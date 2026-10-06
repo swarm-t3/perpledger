@@ -60,5 +60,8 @@ Deadline 2026-10-07 15:56 UTC.
 ## 2026-10-06 17:07–17:12 UTC (wake)
 - No new answers. More evidence: Koinly board "Way too many micro-payments falsely pushing into Top Tier Plan" (17 votes, Dec 2025) — added to report and to the Canny request. Third-party forums (CoinTracking, CoinTracker community) unreachable from here.
 
+## 2026-10-06 17:24 UTC (wake)
+- No new answers; inbox has nothing for +perpledger/+txsqueeze besides the GoatCounter welcome. Saved inbox checker as scripts/mail_check.py (reads alias mail via IMAP, read-only).
+
 ## Next
 - Wait on approvals; meanwhile add CoinTracker/CoinLedger/Awaken formats? Only if traffic arrives. Keep looking for reachable channels.
