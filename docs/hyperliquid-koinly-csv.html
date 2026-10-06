@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to import Hyperliquid perps, funding and fees into Koinly (CSV guide, 2026)</title>
+<meta name="description" content="Step-by-step: get Hyperliquid perpetual futures PnL, funding payments, trading fees, spot trades and transfers into Koinly with a universal CSV. Which labels to use, the 10,000-fill API limit, and how to keep your Koinly transaction count down.">
+<link rel="canonical" href="https://swarm-t3.github.io/perpledger/hyperliquid-koinly-csv.html">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="./" style="text-decoration:none;color:inherit">Perp<span>Ledger</span></a><nav><a href="./">Build my CSV</a></nav></div></header>
+<main class="wrap">
+<h1>How to import Hyperliquid perps, funding and fees into Koinly</h1>
+<p class="muted">Updated October 2026. Not tax advice.</p>
+
+<p>Koinly can sync a Hyperliquid address, but over 2025–2026 its own feedback board logged a run of Hyperliquid gaps: <a href="https://feedback.koinly.io/apicsv-issues-public/p/hyperliquid-pnl-trades-are-not-imported">perp PnL trades not imported</a>, <a href="https://feedback.koinly.io/feature-requests/p/hyperliquid-api-futures-fees">futures fee rebates mis-summed</a>, <a href="https://feedback.koinly.io/apicsv-issues-public/p/hyperliquid-transfers-between-spot-and-perps-are-imported">spot↔perp transfers imported as transactions</a>, and staking rewards in the wrong currency. Many were fixed, but if your numbers don't match your Hyperliquid account, or the sync pushes you onto a bigger plan, a CSV import gives you control.</p>
+
+<h2>1. Get your data</h2>
+<p>Hyperliquid has three histories: <b>fills</b> (every trade, with <code>closedPnl</code> and <code>fee</code>), <b>funding</b> (hourly funding payments per position) and the <b>ledger</b> (deposits from Arbitrum, withdrawals, transfers, vault deposits, rewards). The app's "Export as CSV" covers trade history. The public info API (<code>userFillsByTime</code>, <code>userFunding</code>, <code>userNonFundingLedgerUpdates</code>) covers all three.</p>
+<p><b>The 10,000-fill limit.</b> The API (and the UI export) only return your most recent 10,000 fills. Funding and ledger history are complete. If you trade a lot, save an export at least every few months.</p>
+
+<h2>2. Map it to Koinly's universal CSV</h2>
+<p>Koinly's universal format has the columns <code>Date, Sent Amount, Sent Currency, Received Amount, Received Currency, Fee Amount, Fee Currency, Net Worth Amount, Net Worth Currency, Label, Description, TxHash</code>. Dates as <code>YYYY-MM-DD HH:mm:ss UTC</code>.</p>
+<table class="t small">
+<tr><th>Hyperliquid event</th><th>Koinly row</th><th>Label</th></tr>
+<tr><td>Perp fill with positive closedPnl</td><td>Received USDC = PnL</td><td>realized gain</td></tr>
+<tr><td>Perp fill with negative closedPnl</td><td>Sent USDC = |PnL|</td><td>realized gain</td></tr>
+<tr><td>Perp trading fee</td><td>Sent USDC = fee</td><td>margin fee</td></tr>
+<tr><td>Maker rebate (negative fee)</td><td>Received USDC</td><td>realized gain</td></tr>
+<tr><td>Funding paid</td><td>Sent USDC</td><td>margin fee</td></tr>
+<tr><td>Funding received</td><td>Received USDC</td><td>realized gain</td></tr>
+<tr><td>Spot buy / sell</td><td>Sent quote, Received base (or the reverse), fee in fee token</td><td>(none: a trade)</td></tr>
+<tr><td>Deposit / withdrawal</td><td>Received / Sent USDC</td><td>(none: Koinly matches it to your Arbitrum wallet transfer)</td></tr>
+<tr><td>Spot↔perp class transfer, sub-account transfer</td><td>Skip: internal movement</td><td></td></tr>
+</table>
+<p>Perp positions are not imported as asset buys and sells: Koinly only needs the realized result, the fees and funding, which is what the labels above do.</p>
+
+<h2>3. Keep the row count down</h2>
+<p>Koinly plans are priced by transaction count (roughly 100 / 1,000 / 3,000 / 10,000+ transactions for the Newbie / Hodler / Trader / Pro tiers). An active Hyperliquid trader can produce thousands of fills a month. Summing PnL, fees and funding <b>per coin per day</b> gives the same yearly totals in a fraction of the rows. In one test on a market-making address, 11,499 fills became 453 Koinly rows.</p>
+
+<h2>4. Import</h2>
+<ol>
+<li>In Koinly, add a wallet named "Hyperliquid (CSV)". If you already have a Hyperliquid API wallet with the same history, delete it or you will double count.</li>
+<li>Import the CSV with "Import from file".</li>
+<li>Check the yearly realized PnL in Koinly against your own totals before filing.</li>
+</ol>
+
+<h2>Do it automatically</h2>
+<p><a href="./"><b>PerpLedger</b></a> does steps 1–3 in your browser: paste your address, get a yearly summary (realized PnL, fees, funding, deposits, withdrawals) for free, and the full Koinly CSV for a one-time $9 in USDC/USDT on Arbitrum.</p>
+<p><a href="./"><button>Build my Koinly CSV</button></a></p>
+</main>
+<footer class="wrap muted">Independent guide, not affiliated with Hyperliquid or Koinly.</footer>
+<script data-goatcounter="https://perpledger.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
