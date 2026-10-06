@@ -36,3 +36,5 @@ button.locked::before{content:"🔒 "}
 details{border-bottom:1px solid #1f2a35;padding:10px 0}summary{cursor:pointer;font-weight:600}
 footer{padding:40px 20px}
 small{color:#8394a5;font-weight:400;font-size:13px}
+.cardbox{margin:24px 0}#card{width:100%;max-width:600px;height:auto;border-radius:10px;border:1px solid #1f2a35;display:block}
+.dl a{text-decoration:none}

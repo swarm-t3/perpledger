@@ -230,7 +230,39 @@ function render(res, user, firstFill, fillCount) {
   const tier = (n) => n <= 100 ? 'Newbie (~$49)' : n <= 1000 ? 'Hodler (~$99)' : n <= 3000 ? 'Trader (~$199)' : 'Pro (~$279) or higher';
   const yFills = Object.values(res.S).reduce((a, s) => a + s.perpFills + s.spotTrades, 0);
   $('savings').innerHTML = `<div class="warn" style="background:#0d1a1f;border-color:#14b8a6;color:#e6edf3">Koinly counts each imported row as a transaction. Fills in this period: <b>${yFills}</b> → Koinly tier ${tier(yFills)}. This CSV: <b>${res.koinly.length}</b> rows → ${tier(res.koinly.length)}. (Koinly list prices, approximate; check koinly.io/pricing.)</div>`;
+  drawCard(res);
   refreshLocks();
+}
+
+const SITE = 'swarm-t3.github.io/perpledger';
+function money(v) { const s = v < 0 ? '-' : '+'; return s + '$' + fmt(Math.abs(v), Math.abs(v) >= 1000 ? 0 : 2); }
+function drawCard(res) {
+  const years = Object.keys(res.S).sort();
+  const c = $('card'), g = c.getContext('2d');
+  const y = $('year').value === 'all' ? (years.length > 1 ? `${years[0]}–${years[years.length - 1]}` : years[0] || '') : $('year').value;
+  const T = { pnl: 0, fees: 0, funding: 0, fills: 0 };
+  for (const k of years) { const s = res.S[k]; T.pnl += s.pnl; T.fees += s.fees; T.funding += s.funding; T.fills += s.perpFills + s.spotTrades; }
+  const net = T.pnl - T.fees + T.funding;
+  g.fillStyle = '#0b1117'; g.fillRect(0, 0, 1200, 630);
+  g.fillStyle = '#14b8a6'; g.fillRect(0, 0, 12, 630);
+  g.font = '700 34px system-ui, sans-serif'; g.fillStyle = '#9fb0c0'; g.fillText(`My ${y} on Hyperliquid`, 70, 90);
+  let big = 96; do { g.font = `800 ${big}px system-ui, sans-serif`; big -= 4; } while (g.measureText(money(net)).width > 1060 && big > 40);
+  g.fillStyle = net >= 0 ? '#5eead4' : '#fca5a5'; g.fillText(money(net), 70, 210);
+  g.font = '500 28px system-ui, sans-serif'; g.fillStyle = '#9fb0c0'; g.fillText('net after fees and funding', 70, 255);
+  const rows = [['Realized PnL', money(T.pnl)], ['Trading fees', money(-T.fees)], ['Funding', money(T.funding)], ['Fills', T.fills.toLocaleString('en-US')]];
+  rows.forEach(([k, v], i) => {
+    const x = 70 + i * 270;
+    g.font = '500 26px system-ui, sans-serif'; g.fillStyle = '#8394a5'; g.fillText(k, x, 360);
+    let fs = 44; do { g.font = `700 ${fs}px system-ui, sans-serif`; fs -= 2; } while (g.measureText(v).width > 250 && fs > 20);
+    g.fillStyle = '#e6edf3'; g.fillText(v, x, 415);
+  });
+  const feeShare = T.pnl > 0 ? Math.round(100 * (T.fees - Math.min(T.funding, 0)) / T.pnl) : null;
+  g.font = '500 28px system-ui, sans-serif'; g.fillStyle = '#fde68a';
+  if (feeShare !== null && feeShare > 0) g.fillText(`Fees and funding paid ate ${feeShare}% of my realized PnL.`, 70, 500);
+  g.font = '600 26px system-ui, sans-serif'; g.fillStyle = '#5eead4'; g.fillText('Perp' , 70, 585);
+  g.fillStyle = '#e6edf3'; g.fillText('Ledger · ' + SITE, 70 + g.measureText('Perp').width, 585);
+  const text = `My ${y} on Hyperliquid: ${money(net)} net after fees and funding (fees ${money(-T.fees)}, funding ${money(T.funding)}). Check yours:`;
+  $('shareX').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent('https://' + SITE + '/');
 }
 
 function refreshLocks() {
@@ -279,6 +311,8 @@ $('dlSummary').onclick = () => {
   const rows = Object.entries(RESULT.res.S).map(([y, s]) => ({ year: y, perp_realized_pnl: s.pnl.toFixed(6), perp_fees: s.fees.toFixed(6), funding_net: s.funding.toFixed(6), net: (s.pnl - s.fees + s.funding).toFixed(6), perp_fills: s.perpFills, spot_fills: s.spotTrades, deposits: s.deposits.toFixed(2), withdrawals: s.withdrawals.toFixed(2) }));
   download(fname('summary'), toCSV(rows));
 };
+$('dlCard').onclick = () => { track('dl-card'); const a = document.createElement('a'); a.href = $('card').toDataURL('image/png'); a.download = 'my-hyperliquid-year.png'; a.click(); };
+$('shareX').addEventListener('click', () => track('share-x'));
 $('copy').onclick = () => { navigator.clipboard.writeText(PAY_TO); $('copy').textContent = 'copied'; track('copy-address'); };
 
 async function rpc(method, params) {

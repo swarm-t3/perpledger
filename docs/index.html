@@ -20,6 +20,7 @@
 <main class="wrap">
 <section class="hero">
   <h1>Your Hyperliquid perps, funding and fees as a Koinly-ready CSV, in far fewer rows.</h1>
+  <p class="muted">Also free: your year on Hyperliquid as a shareable card (net PnL after fees and funding).</p>
   <p class="lead">Koinly prices by transaction count, and every Hyperliquid fill counts. 8,000 fills puts you on the ~$279/yr plan. PerpLedger rolls fills, fees and funding into daily totals per coin, so the same year can fit in a few hundred rows (the ~$99 tier). It also covers what Koinly's Hyperliquid sync has historically missed: perp PnL, funding and TWAP fills.</p>
   <p class="muted">Reads your public Hyperliquid history in your browser. No wallet connect, no signup, nothing uploaded.</p>
   <p class="deadline">US filers on extension: the deadline is <b>October 15</b>.</p>
@@ -46,6 +47,12 @@
   <div id="warn"></div>
   <table id="summary" class="t"></table>
   <div id="savings"></div>
+  <div class="cardbox">
+    <h3>Your year on Hyperliquid, as a card</h3>
+    <canvas id="card" width="1200" height="630"></canvas>
+    <div class="dl"><button id="dlCard" type="button">Download card (PNG)</button> <a id="shareX" target="_blank" rel="noopener"><button type="button">Share on X</button></a></div>
+    <p class="muted">The card shows totals only, never your address. Pick which year above.</p>
+  </div>
   <h3>Koinly CSV preview <small id="rowcount"></small></h3>
   <div class="scroll"><table id="preview" class="t small"></table></div>
 
