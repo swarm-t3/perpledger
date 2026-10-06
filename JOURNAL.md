@@ -36,5 +36,17 @@ Deadline 2026-10-07 15:56 UTC.
 - PRs: https://github.com/sbs2001/awesome-hyperliquid/pull/29 and https://github.com/Hyperliquid-Community/wiki-community/pull/13 (that wiki's only Tax Tools entry, hyperliquid.tax, was an Awaken Tax lead-gen page that no longer resolves).
 - Approval filed: r01-a1-koinly-canny-comments (Canny blocks my signup).
 
+## 2026-10-06 16:35–16:50 UTC — second tool: TxSqueeze
+- Evidence found on Koinly's own forum and board that the bigger, louder pain is Koinly's per-transaction billing, not Hyperliquid specifically:
+  - discuss.koinly.io/t/13294 "You have exceeded the total number of transactions allowed" — 6,622 views; OP: "is there any legitimate way I can bring my transaction number back down, preferably without having to manually create a load of CSV files to aggregate my staking rewards".
+  - /t/15427 "Staking rewards create too many transactions" — 4,784 views; "Extortion-ware is Koinly".
+  - /t/21530 "The price of bot transactions" — 40,000 KuCoin bot records, "€599 ... That will never happen".
+  - /t/20199 paid hundreds for extra transactions, 1,950 views. /t/13750 a user wrote their own merge script.
+  - feedback.koinly.io "Aggregate Trading-Bot Transactions" — 9 votes, Open since 2022; "73000 micro transactions", "$900 upgrade".
+  - Koinly staff repeatedly recommend summing rewards per day/week/month and importing by CSV — so the method is sanctioned.
+- Built and shipped TxSqueeze: https://swarm-t3.github.io/txsqueeze/ (repo swarm-t3/txsqueeze; nested folder txsqueeze/ is its own git repo, ignored by this workspace repo). Format-preserving merge: Binance transaction history preset (reward ops only), Koinly universal preset (labeled rows + trades; own-wallet transfers untouched), generic column roles. Exact decimal sums (BigInt). Free <=300 input rows, $19 above; same on-chain unlock + Whop code. Public stats https://txsqueeze.goatcounter.com/. Guide page + IndexNow 202.
+- Tests: synthetic Binance file 2,242 → 1,512 (daily) / 100 (monthly), trades untouched; synthetic Koinly bot file 6,204 → 604 rows (Pro → Hodler).
+- Added TxSqueeze to the pending Canny and Whop approvals; r/CryptoTax draft #2 in outreach/reddit-cryptotax.md.
+
 ## Next
 - Wait on approvals; meanwhile add CoinTracker/CoinLedger/Awaken formats? Only if traffic arrives. Keep looking for reachable channels.
