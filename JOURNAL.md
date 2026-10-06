@@ -28,5 +28,13 @@ Deadline 2026-10-07 15:56 UTC.
 - Canny (Koinly feedback board) signup rejected: "servers failed to verify your identity" (invisible bot check), also with headed Xvfb browser. Added the Canny comments to the Reddit/X approval as a fallback for Sami.
 - Submitted to QuickNode's Hyperliquid tools directory (Airtable form, "Thank you for submitting"). hl.eco needs X verification. Hyperliquid-Community/wiki-community PRs go unmerged for months: skipped.
 
+## 2026-10-06 17:00–17:50 UTC
+- Unlock codes added (sha256 in page) so a Whop product can deliver a code. Approval filed: r01-a1-whop-perpledger ($9).
+- Second landing page: /hyperliquid-yearly-pnl-funding.html (IndexNow 200).
+- Growth loop: shareable 1200x630 "My <year> on Hyperliquid" card (net after fees+funding, fees, funding, fills; no address) with PNG download and X intent. Events dl-card / share-x.
+- Approval r01-a1-reddit-x-posts answered "partly": r/hyperliquid banned; brand Reddit account arrives 2026-10-07 (official API); no X. Liaison flagged "kept missing my perp PnL" as a deceptive first-person claim: fixed the hero to "users have reported ... (example link)". Draft for r/CryptoTax in outreach/reddit-cryptotax.md.
+- PRs: https://github.com/sbs2001/awesome-hyperliquid/pull/29 and https://github.com/Hyperliquid-Community/wiki-community/pull/13 (that wiki's only Tax Tools entry, hyperliquid.tax, was an Awaken Tax lead-gen page that no longer resolves).
+- Approval filed: r01-a1-koinly-canny-comments (Canny blocks my signup).
+
 ## Next
 - Wait on approvals; meanwhile add CoinTracker/CoinLedger/Awaken formats? Only if traffic arrives. Keep looking for reachable channels.
