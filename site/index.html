@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PerpLedger — Hyperliquid tax CSV for Koinly (perps PnL, funding, fees)</title>
+<meta name="description" content="Paste your Hyperliquid address, get a Koinly-ready CSV with perp realized PnL, funding payments, fees, spot trades, deposits and withdrawals. Daily aggregation cuts thousands of fills to a few hundred rows. Runs in your browser.">
+<meta property="og:title" content="PerpLedger — Hyperliquid → Koinly CSV in 60 seconds">
+<meta property="og:description" content="Perp PnL, funding and fees that Koinly's Hyperliquid sync misses. Free summary, $9 full export. Runs in your browser, no wallet connect.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">Perp<span>Ledger</span></div>
+    <nav><a href="#how">How it works</a> <a href="#pricing">Pricing</a> <a href="#faq">FAQ</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+<section class="hero">
+  <h1>Your Hyperliquid perps, funding and fees as a Koinly-ready CSV.</h1>
+  <p class="lead">Koinly's Hyperliquid sync has a history of missing perp PnL, funding payments and TWAP fills, and the fix people are told to use is hand-editing the trade_history CSV. PerpLedger reads your public Hyperliquid history and writes the file for you, in your browser.</p>
+  <p class="deadline">US filers on extension: the deadline is <b>October 15</b>.</p>
+
+  <form id="f" autocomplete="off">
+    <input id="addr" placeholder="0x… your Hyperliquid address (public, no wallet connect)" spellcheck="false" required>
+    <select id="year">
+      <option value="all">All years</option>
+      <option value="2026">2026</option>
+      <option value="2025" selected>2025</option>
+      <option value="2024">2024</option>
+    </select>
+    <select id="agg">
+      <option value="daily" selected>Daily totals per coin (fewer Koinly rows)</option>
+      <option value="fill">One row per fill</option>
+    </select>
+    <button type="submit">Build my CSV</button>
+  </form>
+  <div id="status"></div>
+</section>
+
+<section id="out" hidden>
+  <h2>Summary <small id="sumaddr"></small></h2>
+  <div id="warn"></div>
+  <table id="summary" class="t"></table>
+  <h3>Koinly CSV preview <small id="rowcount"></small></h3>
+  <div class="scroll"><table id="preview" class="t small"></table></div>
+
+  <div class="dl">
+    <button id="dlKoinly" class="locked">Download Koinly CSV</button>
+    <button id="dlGeneric" class="locked">Download full ledger CSV</button>
+    <button id="dlSummary">Download summary CSV (free)</button>
+  </div>
+
+  <div id="pay" class="pay">
+    <h3>Unlock the full export: $9, one time</h3>
+    <p>Send <b>9 USDT or 9 USDC</b> on <b>Arbitrum One</b> (the chain you bridge to Hyperliquid on) to:</p>
+    <p class="addr"><code id="payto">0x36c37d1b47737ba2b2a2cf1b5bc38509516b222f</code> <button id="copy" type="button">copy</button></p>
+    <p class="muted">Only Arbitrum One. USDT (0xFd08…Cbb9) or native USDC (0xaf88…5831). Other chains or tokens cannot be credited.</p>
+    <p>Then paste the transaction hash. The page checks the transfer on-chain and unlocks the downloads for any address, on this browser.</p>
+    <div class="row"><input id="tx" placeholder="0x… Arbitrum transaction hash" spellcheck="false"><button id="verify" type="button">Verify payment</button></div>
+    <div id="paystatus"></div>
+    <p class="muted">Accountant with several clients? <a href="mailto:megafi.app1+perpledger@gmail.com?subject=PerpLedger%20bulk">Email us</a> for a 10-wallet pack ($49).</p>
+  </div>
+</section>
+
+<section id="how">
+  <h2>How it works</h2>
+  <ol>
+    <li>Reads your fills, funding payments and ledger (deposits, withdrawals, transfers, rewards) from Hyperliquid's public info API. Nothing to sign, no keys, no wallet connect. The data never leaves your browser.</li>
+    <li>Writes Koinly's universal CSV format with the labels Koinly expects for derivatives: perp closed PnL as <code>realized gain</code>, trading fees and paid funding as <code>margin fee</code>, received funding as <code>realized gain</code>. Spot fills become normal trades.</li>
+    <li>Daily aggregation turns thousands of fills into one PnL row, one fee row and one funding row per coin per day. Koinly prices plans by transaction count, so fewer rows can mean a cheaper plan.</li>
+  </ol>
+</section>
+
+<section id="pricing">
+  <h2>Pricing</h2>
+  <div class="cards">
+    <div class="card"><h3>Free</h3><p class="price">$0</p><ul><li>Yearly summary: realized PnL, fees, funding, deposits, withdrawals</li><li>Preview of the Koinly CSV</li><li>Summary CSV</li></ul></div>
+    <div class="card hi"><h3>Full export</h3><p class="price">$9</p><ul><li>Koinly CSV, every year</li><li>Full raw ledger CSV (every fill, funding payment and transfer)</li><li>Unlimited re-exports on this browser</li></ul></div>
+    <div class="card"><h3>Accountant pack</h3><p class="price">$49</p><ul><li>10 client wallets</li><li>Email support</li><li><a href="mailto:megafi.app1+perpledger@gmail.com?subject=PerpLedger%20accountant%20pack">Email to order</a></li></ul></div>
+  </div>
+</section>
+
+<section id="faq">
+  <h2>FAQ</h2>
+  <details><summary>Does it get my whole history?</summary><p>Hyperliquid's API only returns your most recent 10,000 fills. Funding and ledger history are complete. If you have more than 10,000 fills the page tells you the date the fill data starts, so you know which older period to cover with your own saved exports.</p></details>
+  <details><summary>Is this tax advice?</summary><p>No. It is a data formatting tool. How perps and funding are taxed depends on your country. Check the numbers against your Hyperliquid account and ask a tax professional when in doubt.</p></details>
+  <details><summary>Why crypto only?</summary><p>You already hold stablecoins on Arbitrum if you trade on Hyperliquid, and on-chain payment lets a static page verify it without accounts or a server.</p></details>
+  <details><summary>Something looks wrong.</summary><p><a href="https://github.com/swarm-t3/perpledger/issues">Open an issue</a> or <a href="mailto:megafi.app1+perpledger@gmail.com">email us</a>. If a paid export is wrong and we cannot fix it, we refund.</p></details>
+</section>
+</main>
+<footer class="wrap muted">PerpLedger is an independent tool, not affiliated with Hyperliquid or Koinly. <a href="https://github.com/swarm-t3/perpledger">Source on GitHub</a>.</footer>
+<script src="app.js"></script>
+</body>
+</html>
