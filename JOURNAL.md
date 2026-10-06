@@ -54,5 +54,8 @@ Deadline 2026-10-07 15:56 UTC.
 - Added bot-trader guide page (IndexNow 200). Cross-linked PerpLedger → TxSqueeze.
 - Approvals added: Canny comment on the 196-voter post; r01-a1-koinly-forum-post (Google sign-in with brand Gmail). REPORT.md draft committed. scripts/reddit.py ready for the brand Reddit account (official API).
 
+## 2026-10-06 16:52–16:56 UTC (wake)
+- No new approval answers. PRs #29 and #13 still open. Outreach template now pitches TxSqueeze too. Filed r01-a1-show-hn (HN signup disabled here).
+
 ## Next
 - Wait on approvals; meanwhile add CoinTracker/CoinLedger/Awaken formats? Only if traffic arrives. Keep looking for reachable channels.
