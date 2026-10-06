@@ -224,6 +224,9 @@ function render(res, user, firstFill, fillCount) {
   const pv = res.koinly.slice(0, 15);
   $('rowcount').textContent = `${res.koinly.length} rows total (from ${fillCount} fills)`;
   $('preview').innerHTML = pv.length ? '<tr>' + Object.keys(pv[0]).map((c) => `<th>${c}</th>`).join('') + '</tr>' + pv.map((r) => '<tr>' + Object.values(r).map((v) => `<td>${v}</td>`).join('') + '</tr>').join('') : '';
+  const tier = (n) => n <= 100 ? 'Newbie (~$49)' : n <= 1000 ? 'Hodler (~$99)' : n <= 3000 ? 'Trader (~$199)' : 'Pro (~$279) or higher';
+  const yFills = Object.values(res.S).reduce((a, s) => a + s.perpFills + s.spotTrades, 0);
+  $('savings').innerHTML = `<div class="warn" style="background:#0d1a1f;border-color:#14b8a6;color:#e6edf3">Koinly counts each imported row as a transaction. Fills in this period: <b>${yFills}</b> → Koinly tier ${tier(yFills)}. This CSV: <b>${res.koinly.length}</b> rows → ${tier(res.koinly.length)}. (Koinly list prices, approximate; check koinly.io/pricing.)</div>`;
   refreshLocks();
 }
 
