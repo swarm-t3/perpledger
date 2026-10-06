@@ -7,6 +7,7 @@ const PAY_TOKENS = {
   '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9': 'USDT',
   '0xaf88d065e77c8cc2239327c5edb3a432268e5831': 'USDC',
 };
+const CODE_HASHES = ['82e33c23c414352b32f496a0605c2dfed206afa86e88f23dd47e92b8c6c8a8d5']; // sha256 of unlock codes sold via Whop
 const TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const FILL_CAP = 10000;
 const FREE_ROWS = 100; // small accounts export free
@@ -312,5 +313,20 @@ $('verify').onclick = async () => {
     }
   } catch (err) {
     $('paystatus').innerHTML = `<span class="err">${err.message}</span>`;
+  }
+};
+
+async function sha256hex(t) {
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
+  return Array.from(new Uint8Array(b)).map((x) => x.toString(16).padStart(2, '0')).join('');
+}
+$('redeem').onclick = async () => {
+  const c = $('code').value.trim().toUpperCase();
+  if (CODE_HASHES.includes(await sha256hex(c))) {
+    localStorage.setItem('pl_unlocked_tx', 'code:' + c);
+    track('code-redeemed');
+    refreshLocks();
+  } else {
+    $('paystatus').innerHTML = '<span class="err">That code is not valid.</span>';
   }
 };
