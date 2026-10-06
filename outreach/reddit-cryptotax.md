@@ -20,7 +20,7 @@ Not tax advice. I built it; feedback on the label mapping is welcome, especially
 Title: Over the Koinly transaction limit because of daily staking/Earn rewards or bot fills? A free tool to merge them per day
 
 Body:
-Koinly bills by transaction count, and Binance Simple Earn / staking pays a row per coin per day, while grid bots split orders into hundreds of fills. Koinly support's own answer on their forum is to "tally up all the rewards received on a certain day/week/month and add a single deposit for the whole amount" (https://discuss.koinly.io/t/staking-rewards-create-too-many-transactions/15427).
+Koinly bills by transaction count, and grid bots split orders into hundreds of fills while Binance Simple Earn / staking pays a row per coin per day. Koinly's in-app bulk aggregate only covers deposits (hourly/daily, one wallet+tag at a time); it can't merge trades or roll up weekly/monthly. Koinly support's own answer on their forum is to "tally up all the rewards received on a certain day/week/month and add a single deposit for the whole amount" (https://discuss.koinly.io/t/staking-rewards-create-too-many-transactions/15427).
 
 TxSqueeze does that for a whole CSV in your browser (nothing uploaded) and keeps the original format so Koinly's importer still reads it:
 - Binance transaction history: merges only reward-type operations (interest, staking rewards, distributions, airdrops, Launchpool…) per day/account/operation/coin; trades, deposits, withdrawals and Earn subscriptions/redemptions stay untouched because Koinly pairs them by timestamp.
